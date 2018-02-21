@@ -85,6 +85,38 @@ GET call_index/call/_search
   }
 }
 ```
+
+### QUESTION 4 - Trouver le top 3 des villes avec le plus d'appels pour overdose
+
+```
+GET call_index/call/_search
+{
+  "size": 0, 
+  "query": {
+    "match": {
+      "title": "OVERDOSE"
+    }
+  }, 
+  "aggs": {
+    "calls": {
+      "terms": {
+        "field": "twp.keyword",
+        "order": {
+          "_count": "desc"
+        }
+      },
+      "aggs": {
+        "calls_bucket_sort": {
+          "bucket_sort": {
+            "size":3
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ## Kibana
 
 Dans Kibana, créez un dashboard qui permet de visualiser :
