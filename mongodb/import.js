@@ -7,16 +7,14 @@ var mongoUrl = 'mongodb://localhost:27017/911-calls';
 
 var insertCalls = function(db, callback) {
     var collection = db.collection('calls');
+    collection.createIndex({"location" : "2dsphere"});
 
     var calls = [];
     fs.createReadStream('../911.csv')
         .pipe(csv())
         .on('data', data => {
             var call = {
-                "location": {
-                    "lat": data.lat,
-                    "lon": data.lng
-                },
+                "location": [parseFloat(data.lng), parseFloat(data.lat)],
                 "desc": data.desc,
                 "zip": data.zip,
                 "title": data.title,
@@ -34,7 +32,7 @@ var insertCalls = function(db, callback) {
         });
 }
 
-MongoClient.connect(mongoUrl, (err, db) => {
+MongoClient.connect(mongoUrl, (err, db) => {  
     insertCalls(db, result => {
         console.log(`${result.insertedCount} calls inserted`);
         db.close();
