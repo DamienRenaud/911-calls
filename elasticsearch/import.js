@@ -4,7 +4,23 @@ var fs = require('fs');
 
 var esClient = new elasticsearch.Client({
   host: 'localhost:9200',
-  log: 'error'
+  log: 'error',
+  requestTimeout: 60000
+});
+
+esClient.indices.create({ 
+  index: 'call_index',
+  body : {
+    mappings: {
+      call: {
+        properties : {
+          location : { type: 'geo_point' }
+        }
+      }
+    }
+  }
+  }, (err, resp) => {
+  if (err) console.trace(err.message);
 });
 
 let calls = [];
@@ -14,7 +30,7 @@ fs.createReadStream('../911.csv')
       // TODO extract one line from CSV
       calls.push({
         "lat": data.lat,
-        "lng": data.lng,
+        "lon": data.lng,
         "desc": data.desc,
         "zip": data.zip,
         "title": data.title,
@@ -35,12 +51,12 @@ fs.createReadStream('../911.csv')
 
     function createBulkInsertQuery(calls) {
       const body = calls.reduce((acc, call) => {
-        const { lat, lng,  desc, zip, title, timeStamp, twp, addr } = call;
+        const { lat, lon,  desc, zip, title, timeStamp, twp, addr } = call;
         acc.push({ index: { _index: 'call_index', _type: 'call' } })
         acc.push({ 
           location: {
             lat, 
-            lng
+            lon
           },  
           desc, 
           zip, 
