@@ -51,13 +51,13 @@ db.calls.find(
 
 ```
 db.calls.aggregate([
-	{
+  {
 		$project: {
 			monthAndYear: { 
 				$concat: [
 					{ $substr: [ { $month: "$date" }, 0, 2] },
-          			"/",
-          			{ $substr: [ { $year: "$date"}, 0, 4] }
+          "/",
+          { $substr: [ { $year: "$date"}, 0, 4] }
 				]
 			}			
 		}
