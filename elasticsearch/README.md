@@ -136,5 +136,7 @@ Réalisez le diagramme suivant :
 Envoyer la réponse sous la forme de la requête Timelion ci-dessous:  
 
 ```
-TODO : ajouter la requête Timelion ici
+.es( index=call_index, q=category:Fire, timefield=date).cusum().label(label="Last 6 months of 'Fire' calls").color('red'),
+.es(index=call_index, q=category:Fire, timefield=date, offset=-6M).cusum().label(label="Previous 6 months of 'Fire' calls").color('orange'),
+.static(label='Objective',value=6000).lines(fill=4).color('darkcyan')
 ```
