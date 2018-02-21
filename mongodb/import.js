@@ -15,7 +15,7 @@ var insertCalls = function(db, callback) {
             var call = {
                 "location": {
                     "lat": data.lat,
-                    "lng": data.lng
+                    "lon": data.lng
                 },
                 "desc": data.desc,
                 "zip": data.zip,
