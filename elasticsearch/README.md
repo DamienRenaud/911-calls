@@ -21,6 +21,8 @@ GET <nom de votre index>/_count
 
 À vous de jouer ! Écrivez les requêtes ElasticSearch permettant de résoudre les problèmes posés.
 
+### QUESTION 1 - Compter le nombre d'appels autour de Lansdale dans un rayon de 500 mètres
+
 ```
 GET call_index/call/_count
 {
