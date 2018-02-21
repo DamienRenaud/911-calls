@@ -47,6 +47,14 @@ db.calls.find(
 ).count()
 ```
 
+### QUESTION 2 - Compter le nombre d'appels par catégorie
+
+```
+db.calls.aggregate([
+    {"$group" : {_id:"$category", count:{$sum:1}}}
+])
+```
+
 ### QUESTION 3 - Trouver les 3 mois ayant comptabilisés le plus d'appels
 
 ```
@@ -80,7 +88,6 @@ db.calls.aggregate([
 	}
 ])
 ```
-
 Vous allez sûrement avoir besoin de vous inspirer des points suivants de la documentation :
 
 * Proximity search : https://docs.mongodb.com/manual/tutorial/query-a-2dsphere-index/#proximity-to-a-geojson-point
