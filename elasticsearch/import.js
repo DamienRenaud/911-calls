@@ -34,7 +34,7 @@ fs.createReadStream('../911.csv')
       "zip": data.zip,
       "title": data.title.substr(data.title.indexOf(':') + 1, data.title.length - 1).trim(),
       'category': data.title.substr(0, data.title.indexOf(':')).trim(),
-      "timeStamp": data.timeStamp,
+      "date": new Date(data.timeStamp),
       "twp": data.twp,
       "addr": data.addr,
       "e": data.e,
@@ -50,7 +50,7 @@ fs.createReadStream('../911.csv')
 
 function createBulkInsertQuery(calls) {
   const body = calls.reduce((acc, call) => {
-    const { lat, lon, desc, zip, category, title, timeStamp, twp, addr } = call;
+    const { lat, lon, desc, zip, category, title, date, twp, addr } = call;
     acc.push({ index: { _index: 'call_index', _type: 'call' } })
     acc.push({
       location: {
@@ -61,7 +61,7 @@ function createBulkInsertQuery(calls) {
       zip,
       category,
       title,
-      timeStamp,
+      date,
       twp,
       addr
     })
