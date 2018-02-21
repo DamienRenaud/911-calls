@@ -18,7 +18,7 @@ var insertCalls = function(db, callback) {
                 "desc": data.desc,
                 "zip": data.zip,
                 "title": data.title,
-                "timeStamp": data.timeStamp,
+                "date": new Date(data.timeStamp),
                 "twp": data.twp,
                 "addr": data.addr,
                 "e": data.e,

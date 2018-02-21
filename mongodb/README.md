@@ -47,6 +47,40 @@ db.calls.find(
 ).count()
 ```
 
+### QUESTION 3 - Trouver les 3 mois ayant comptabilisés le plus d'appels
+
+```
+db.calls.aggregate([
+	{
+		$project: {
+			monthAndYear: { 
+				$concat: [
+					{ $substr: [ { $month: "$date" }, 0, 2] },
+          			"/",
+          			{ $substr: [ { $year: "$date"}, 0, 4] }
+				]
+			}			
+		}
+	},
+	{
+		$group: {
+			_id: "$monthAndYear",
+			count: { $sum: 1 } 
+		}
+	},
+
+	{
+		$sort: {
+			count: -1
+		} 
+	},
+
+	{
+		$limit:3
+	}
+])
+```
+
 Vous allez sûrement avoir besoin de vous inspirer des points suivants de la documentation :
 
 * Proximity search : https://docs.mongodb.com/manual/tutorial/query-a-2dsphere-index/#proximity-to-a-geojson-point
