@@ -73,6 +73,13 @@ GET call_index/call/_search
         "field" : "date",
         "interval" : "month",
         "order" : { "_count" : "desc" }
+      },
+      "aggs": {
+        "calls_bucket_sort": {
+          "bucket_sort": {
+            "size":3
+          }
+        }
       }
     }
   }
