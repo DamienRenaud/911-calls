@@ -47,6 +47,15 @@ db.calls.find(
 ).count()
 ```
 
+### QUESTION 2 - Compter le nombre d'appels par catégorie
+
+```
+db.calls.aggregate([
+    {"$group" : {_id:"$category", count:{$sum:1}}}
+])
+```
+
+
 Vous allez sûrement avoir besoin de vous inspirer des points suivants de la documentation :
 
 * Proximity search : https://docs.mongodb.com/manual/tutorial/query-a-2dsphere-index/#proximity-to-a-geojson-point
