@@ -45,6 +45,22 @@ GET call_index/call/_count
 }
 ```
 
+### QUESTION 2 - Compter le nombre d'appels par catégorie
+
+```
+GET call_index/_search
+{
+  "size": 0, 
+  "aggs": {
+    "category": {
+      "terms": {
+        "field": "category.keyword"
+      }
+    }
+  }
+}
+```
+
 ## Kibana
 
 Dans Kibana, créez un dashboard qui permet de visualiser :
