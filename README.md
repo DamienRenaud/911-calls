@@ -77,6 +77,38 @@ Coordonnées GPS du quartier de *Lansdale, PA, USA* :
 
 Le résultat attendu est **717**.
 
+#### Requête elasticsearch
+
+```
+esClient
+    .count({
+        index: 'call_index',
+        type: 'call',
+        body: {
+            query: {
+                bool: {
+                    must: {
+                        match_all: {}
+                    },
+                    filter: {
+                        geo_distance: {
+                            distance: "500m",
+                            location: {
+                                lat: lansdaleLocation.lat,
+                                lon: lansdaleLocation.lon
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    })
+    .then(resp => {
+        console.log(resp.count);
+    });
+```
+
 ### Compter le nombre d'appels par catégorie
 
 Le résultat attendu est :
